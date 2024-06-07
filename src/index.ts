@@ -217,6 +217,10 @@ To hide this message set build.sourcemap to true, 'inline' or 'hidden'.`)}`
         const combinedSourceMap = sanitizeSourceMap(
           this.getCombinedSourcemap()
         );
+        combinedSourceMap.sources.forEach((code, index) => {
+          combinedSourceMap.sources[index] = code.replace(/\?.*$/, '');
+        });
+
         const code = instrumenter.instrumentSync(
           srcCode,
           filename,
